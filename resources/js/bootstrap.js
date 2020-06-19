@@ -1,6 +1,3 @@
-require('../dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js');
-require('../dist/js/tabler.min.js');
-
 window._ = require('lodash');
 
 /**
