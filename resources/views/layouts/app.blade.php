@@ -24,6 +24,9 @@
     <meta name="robots" content="noindex,nofollow,noarchive"/>
     <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
+    @if (auth()->check())
+    <meta name="api-token" content="{{ auth()->user()->api_token }}">
+    @endif
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"/>
     <style>
