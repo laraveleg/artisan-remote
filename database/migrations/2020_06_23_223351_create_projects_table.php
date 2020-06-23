@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->string('guid')->unique();
             $table->string('public_key', 16);
             $table->string('secret_key', 64);
-            $table->json('artisan_orders');
+            $table->json('artisan_orders')->nullable();
             $table->timestamps();
         });
     }
