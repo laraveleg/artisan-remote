@@ -37339,6 +37339,7 @@ var ProjetsIndexComponent = /** @class */ (function (_super) {
             .then(function (response) {
             _this.do_add_project = false;
             if (response.data.status == 'success') {
+                _this.getIndexProjet();
                 $('#model-add-new-project').modal('hide');
                 _this.name = '';
                 _this.url_listener = '';
@@ -37786,7 +37787,10 @@ var render = function() {
             _c("div", { staticClass: "text-truncate" }, [
               _c(
                 "a",
-                { staticClass: "text-body d-block", attrs: { href: "#" } },
+                {
+                  staticClass: "text-body d-block",
+                  attrs: { href: project.url }
+                },
                 [_vm._v(_vm._s(project.name))]
               ),
               _vm._v(" "),

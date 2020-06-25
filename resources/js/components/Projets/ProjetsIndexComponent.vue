@@ -17,7 +17,7 @@
                         <span class="avatar">EP</span>
                     </a>
                     <div class="text-truncate">
-                        <a href="#" class="text-body d-block">{{ project.name }}</a>
+                        <a :href="project.url" class="text-body d-block">{{ project.name }}</a>
                         <small class="d-block text-muted text-truncate mt-n1">Copywriting edits</small>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                 if (response.data.status == 'success') {
                     this.projects = response.data.data.projects
                 }
-                
+
             })
             .catch(error => console.error(error));
         }
@@ -113,6 +113,7 @@
                 this.do_add_project = false;
 
                 if (response.data.status == 'success') {
+                    this.getIndexProjet();
                     $('#model-add-new-project').modal('hide');
                     this.name = '';
                     this.url_listener = '';
