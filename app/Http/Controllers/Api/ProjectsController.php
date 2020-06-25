@@ -16,6 +16,27 @@ use App\Models\{
 
 class ProjectsController extends Controller
 {
+    public function index(Request $request)
+    {
+        $projects = ProjectTeam::where('user_id', '=', $request->user()->id)->get();
+
+        $_projects = [];
+        foreach ($projects as $project) {
+            $_projects []= [
+                'guid' => $project->project->guid,
+                'name' => $project->project->name,
+            ];
+        }
+
+        return[
+            'status' => 'success',
+            'message' => 'Projects index',
+            'data' => [
+                'projects' => $_projects
+            ],
+        ];
+    }
+
     public function store(ProjectStoreRequest $request)
     {
         $data = [

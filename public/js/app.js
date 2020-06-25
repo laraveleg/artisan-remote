@@ -37310,10 +37310,24 @@ var ProjetsIndexComponent = /** @class */ (function (_super) {
         _this.name = '';
         _this.url_listener = '';
         _this.do_add_project = false;
+        _this.projects = [];
         return _this;
     }
+    ProjetsIndexComponent.prototype.mounted = function () {
+        this.getIndexProjet();
+    };
     ProjetsIndexComponent.prototype.addNewProject = function () {
         $('#model-add-new-project').modal();
+    };
+    ProjetsIndexComponent.prototype.getIndexProjet = function () {
+        var _this = this;
+        axios_1.default.get('/api/projects/index')
+            .then(function (response) {
+            if (response.data.status == 'success') {
+                _this.projects = response.data.data.projects;
+            }
+        })
+            .catch(function (error) { return console.error(error); });
     };
     ProjetsIndexComponent.prototype.saveNewProject = function () {
         var _this = this;
@@ -37760,7 +37774,32 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c(
+        "div",
+        { staticClass: "list list-row list-hoverable" },
+        _vm._l(_vm.projects, function(project) {
+          return _c("div", { key: project.guid, staticClass: "list-item" }, [
+            _vm._m(0, true),
+            _vm._v(" "),
+            _vm._m(1, true),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-truncate" }, [
+              _c(
+                "a",
+                { staticClass: "text-body d-block", attrs: { href: "#" } },
+                [_vm._v(_vm._s(project.name))]
+              ),
+              _vm._v(" "),
+              _c(
+                "small",
+                { staticClass: "d-block text-muted text-truncate mt-n1" },
+                [_vm._v("Copywriting edits")]
+              )
+            ])
+          ])
+        }),
+        0
+      )
     ]),
     _vm._v(" "),
     _c(
@@ -37783,7 +37822,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "mb-3" }, [
@@ -37888,26 +37927,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "list list-row list-hoverable" }, [
-      _c("div", { staticClass: "list-item" }, [
-        _c("div", [_c("span", { staticClass: "badge" })]),
-        _vm._v(" "),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("span", { staticClass: "avatar" }, [_vm._v("EP")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "text-truncate" }, [
-          _c("a", { staticClass: "text-body d-block", attrs: { href: "#" } }, [
-            _vm._v("Egan Poetz")
-          ]),
-          _vm._v(" "),
-          _c(
-            "small",
-            { staticClass: "d-block text-muted text-truncate mt-n1" },
-            [_vm._v("Copywriting edits")]
-          )
-        ])
-      ])
+    return _c("div", [_c("span", { staticClass: "badge" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("span", { staticClass: "avatar" }, [_vm._v("EP")])
     ])
   },
   function() {

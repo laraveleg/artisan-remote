@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->group(function () {
     Route::prefix('projects')->group(function () {
+        Route::get('/index', 'Api\ProjectsController@index');
         Route::post('/store', 'Api\ProjectsController@store');
     });
 });

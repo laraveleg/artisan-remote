@@ -16,4 +16,9 @@ class ProjectTeam extends Model
         'projet_id',
         'role',
     ];
+
+    public function project()
+    {
+        return $this->hasOne(Project::class, 'id', 'projet_id');
+    }
 }

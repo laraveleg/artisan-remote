@@ -11,13 +11,13 @@
             </div>
             <div class="list list-row list-hoverable">
 
-                <div class="list-item">
+                <div class="list-item" v-for="project in projects" :key="project.guid">
                     <div><span class="badge"></span></div>
                     <a href="#">
                         <span class="avatar">EP</span>
                     </a>
                     <div class="text-truncate">
-                        <a href="#" class="text-body d-block">Egan Poetz</a>
+                        <a href="#" class="text-body d-block">{{ project.name }}</a>
                         <small class="d-block text-muted text-truncate mt-n1">Copywriting edits</small>
                     </div>
                 </div>
@@ -75,9 +75,30 @@
 
         do_add_project:any = false;
 
+        projects:any = [];
+
+
+        mounted()
+        {
+            this.getIndexProjet();
+        }
+
         addNewProject()
         {
             $('#model-add-new-project').modal();
+        }
+
+        getIndexProjet()
+        {
+            axios.get('/api/projects/index')
+            .then((response) => {
+
+                if (response.data.status == 'success') {
+                    this.projects = response.data.data.projects
+                }
+                
+            })
+            .catch(error => console.error(error));
         }
 
         saveNewProject()
