@@ -9751,8 +9751,8 @@ Dimmer
   padding-bottom: .75rem; }
 
 .modal-blur {
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px); }
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px); }
 
 .modal-full-width {
   max-width: none;

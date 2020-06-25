@@ -1,0 +1,59 @@
+(<any>window)._ = require('lodash');
+
+/**
+ * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+ * for JavaScript based Bootstrap features such as modals and tabs. This
+ * code may be modified to fit the specific needs of your application.
+ */
+
+try {
+    (<any>window).Popper = require('popper.js').default;
+    (<any>window).$ = (<any>window).jQuery = require('jquery');
+
+    require('bootstrap');
+} catch (e) {}
+
+/**
+ * We'll load the axios HTTP library which allows us to easily issue requests
+ * to our Laravel back-end. This library automatically handles sending the
+ * CSRF token as a header based on the value of the "XSRF" token cookie.
+ */
+
+// (<any>window).axios = require('axios');
+import axios from 'axios';
+
+/**
+ * Next we will register the CSRF Token as a common header with Axios so that
+ * all outgoing HTTP requests automatically have it attached. This is just
+ * a simple convenience so we don't have to attach every token manually.
+ */
+
+axios.interceptors.request.use(
+    (config) => {
+        config.headers['X-Requested-With'] = `XMLHttpRequest`;
+        config.headers['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        config.headers['Authorization'] = `Bearer ${document.head.querySelector('meta[name="api-token"]').getAttribute('content')}`;
+  
+        return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+/**
+ * Echo exposes an expressive API for subscribing to channels and listening
+ * for events that are broadcast by Laravel. Echo and event broadcasting
+ * allows your team to easily build robust real-time web applications.
+ */
+
+// import Echo from 'laravel-echo'
+
+// window.Pusher = require('pusher-js');
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     encrypted: true
+// });
