@@ -12,9 +12,10 @@ class Project extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
         'guid',
         'public_key',
         'secret_key',
+        'name',
+        'url_listener'
     ];
 }

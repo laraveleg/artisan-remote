@@ -35,15 +35,20 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" name="example-text-input" placeholder="Your report name" v-model="name">
+                            <input type="text" class="form-control"  placeholder="Your report name" v-model="name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Url listener</label>
+                            <input type="text" class="form-control" placeholder="Your report name" v-model="url_listener">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <a href="#" class="btn btn-link link-secondary" data-dismiss="modal">
                             Cancel
                         </a>
-                        <a href="javascript:false" class="btn btn-primary ml-auto" @click="saveNewProject">
+                        <a href="javascript:false" class="btn btn-primary ml-auto" v-bind:class="{ disabled: do_add_project }" @click="saveNewProject">
                             Create new project
+                            <span class="spinner-border spinner-border-sm ml-2" role="status" v-if="do_add_project"></span>
                         </a>
                     </div>
                 </div>
@@ -53,15 +58,6 @@
     </div>
 
 </template>
-
-<script>
-    // export default {
-    //     mounted() {
-    //         console.log('Component mounted.')
-    //     }
-    // }
-
-</script>
 
 <script lang="ts">
     import Vue from 'vue';
@@ -75,24 +71,35 @@
     export default class ProjetsIndexComponent extends Vue
     {
         name:string = '';
+        url_listener:string = '';
+
+        do_add_project:any = false;
 
         addNewProject()
         {
-            console.log((<any>window).axios);
             $('#model-add-new-project').modal();
         }
 
         saveNewProject()
         {
+            this.do_add_project = true;
+
             axios.post('/api/projects/store', {
                 name: this.name,
+                url_listener: this.url_listener,
             })
             .then((response) => {
-                console.log(response.data);
+                this.do_add_project = false;
+
+                if (response.data.status == 'success') {
+                    $('#model-add-new-project').modal('hide');
+                    this.name = '';
+                    this.url_listener = '';
+                }
+
             })
             .catch(error => console.error(error));
         }
 
     }
-
 </script>

@@ -37308,18 +37308,27 @@ var ProjetsIndexComponent = /** @class */ (function (_super) {
     function ProjetsIndexComponent() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = '';
+        _this.url_listener = '';
+        _this.do_add_project = false;
         return _this;
     }
     ProjetsIndexComponent.prototype.addNewProject = function () {
-        console.log(window.axios);
         $('#model-add-new-project').modal();
     };
     ProjetsIndexComponent.prototype.saveNewProject = function () {
+        var _this = this;
+        this.do_add_project = true;
         axios_1.default.post('/api/projects/store', {
             name: this.name,
+            url_listener: this.url_listener,
         })
             .then(function (response) {
-            console.log(response.data);
+            _this.do_add_project = false;
+            if (response.data.status == 'success') {
+                $('#model-add-new-project').modal('hide');
+                _this.name = '';
+                _this.url_listener = '';
+            }
         })
             .catch(function (error) { return console.error(error); });
     };
@@ -37790,11 +37799,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: "example-text-input",
-                      placeholder: "Your report name"
-                    },
+                    attrs: { type: "text", placeholder: "Your report name" },
                     domProps: { value: _vm.name },
                     on: {
                       input: function($event) {
@@ -37802,6 +37807,34 @@ var render = function() {
                           return
                         }
                         _vm.name = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-3" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Url listener")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.url_listener,
+                        expression: "url_listener"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", placeholder: "Your report name" },
+                    domProps: { value: _vm.url_listener },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.url_listener = $event.target.value
                       }
                     }
                   })
@@ -37826,13 +37859,20 @@ var render = function() {
                   "a",
                   {
                     staticClass: "btn btn-primary ml-auto",
+                    class: { disabled: _vm.do_add_project },
                     attrs: { href: "javascript:false" },
                     on: { click: _vm.saveNewProject }
                   },
                   [
                     _vm._v(
-                      "\n                        Create new project\n                    "
-                    )
+                      "\n                        Create new project\n                        "
+                    ),
+                    _vm.do_add_project
+                      ? _c("span", {
+                          staticClass: "spinner-border spinner-border-sm ml-2",
+                          attrs: { role: "status" }
+                        })
+                      : _vm._e()
                   ]
                 )
               ])
@@ -50440,18 +50480,14 @@ var axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
  * all outgoing HTTP requests automatically have it attached. This is just
  * a simple convenience so we don't have to attach every token manually.
  */
-var token = document.head.querySelector('meta[name="csrf-token"]');
-if (token) {
-    window.axios.defaults.headers.common = {
-        'X-CSRF-TOKEN': token.getAttribute('content'),
-        'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': 'Bearer 58YECQ7IcFbjYj5xBbfne3ctfuIBnzVnJBV8BkkjXKYfsX1y73gFMEaSy0V3'
-    };
-}
-else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
 axios_1.default.interceptors.request.use(function (config) {
+    config.headers['X-Requested-With'] = "XMLHttpRequest";
+    try {
+        config.headers['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    }
+    catch (error) {
+        console.log('Set csrf-token meta tag');
+    }
     config.headers['Authorization'] = "Bearer " + document.head.querySelector('meta[name="api-token"]').getAttribute('content');
     return config;
 }, function (error) {

@@ -31,7 +31,13 @@ import axios from 'axios';
 axios.interceptors.request.use(
     (config) => {
         config.headers['X-Requested-With'] = `XMLHttpRequest`;
-        config.headers['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+        try {
+          config.headers['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        } catch (error) {
+          console.log('Set csrf-token meta tag');
+        }
+        
         config.headers['Authorization'] = `Bearer ${document.head.querySelector('meta[name="api-token"]').getAttribute('content')}`;
   
         return config;

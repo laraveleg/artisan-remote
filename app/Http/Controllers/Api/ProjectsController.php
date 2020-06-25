@@ -19,10 +19,11 @@ class ProjectsController extends Controller
     public function store(ProjectStoreRequest $request)
     {
         $data = [
-            'name' => $request->name,
             'guid' => Str::random(9),
             'public_key' => Str::random(16),
             'secret_key' => Str::random(64),
+            'name' => $request->name,
+            'url_listener' => $request->url_listener
         ];
 
         $Project = Project::create($data);
@@ -33,6 +34,10 @@ class ProjectsController extends Controller
             'role' => 1
         ]);
 
-        return 'Done';
+        return[
+            'status' => 'success',
+            'message' => 'Project added',
+            'data' => [],
+        ];
     }
 }

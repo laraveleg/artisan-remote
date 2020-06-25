@@ -15,10 +15,11 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('guid')->unique();
             $table->string('public_key', 16);
             $table->string('secret_key', 64);
+            $table->string('name');
+            $table->string('url_listener');
             $table->json('artisan_orders')->nullable();
             $table->timestamps();
         });
