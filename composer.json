@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "laraveleg/artisan-remote",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Send order to artisan remote.",
     "keywords": [
         "framework",
         "laravel"
