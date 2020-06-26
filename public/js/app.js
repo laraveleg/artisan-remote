@@ -37394,10 +37394,21 @@ var ProjetsShowComponent = /** @class */ (function (_super) {
     function ProjetsShowComponent() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.artisan = '';
+        _this.project = '';
         return _this;
     }
     ProjetsShowComponent.prototype.mounted = function () {
-        // 
+        this.getProjet();
+    };
+    ProjetsShowComponent.prototype.getProjet = function () {
+        var _this = this;
+        axios_1.default.get('/api/projects/show/' + this.guid)
+            .then(function (response) {
+            if (response.data.status == 'success') {
+                _this.project = response.data.data.project;
+            }
+        })
+            .catch(function (error) { return console.error(error); });
     };
     ProjetsShowComponent.prototype.sendArtisan = function () {
         axios_1.default.post('/api/' + this.guid + '/artisans/send', {
@@ -38080,14 +38091,15 @@ var render = function() {
                     _vm._v("Select artisan ...")
                   ]),
                   _vm._v(" "),
-                  _c("option", [_vm._v("key:generate")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("migrate")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("migrate:fresh")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("test")])
-                ]
+                  _vm._l(_vm.project.artisan_orders, function(item, key) {
+                    return _c(
+                      "option",
+                      { key: key, domProps: { value: item } },
+                      [_vm._v(_vm._s(item))]
+                    )
+                  })
+                ],
+                2
               )
             ]),
             _vm._v(" "),

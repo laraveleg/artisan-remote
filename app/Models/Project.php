@@ -18,4 +18,8 @@ class Project extends Model
         'name',
         'url_listener'
     ];
+
+    protected $casts = [
+        'artisan_orders' => 'array',
+    ];
 }

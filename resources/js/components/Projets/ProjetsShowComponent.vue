@@ -13,10 +13,7 @@
                         <div class="col">
                             <select class="form-select" v-model="artisan">
                                 <option value="">Select artisan ...</option>
-                                <option>key:generate</option>
-                                <option>migrate</option>
-                                <option>migrate:fresh</option>
-                                <option>test</option>
+                                <option v-for="(item, key) in project.artisan_orders" :key="key" :value="item">{{ item }}</option>
                             </select>
                         </div>
                         <div class="col-auto">
@@ -45,12 +42,26 @@
     export default class ProjetsShowComponent extends Vue
     {
         artisan:string = '';
+        project:Object = '';
 
         @Prop({default: ''}) guid:any;
 
         mounted()
         {
-            // 
+            this.getProjet();
+        }
+
+        getProjet()
+        {
+            axios.get('/api/projects/show/'+this.guid)
+            .then((response) => {
+
+                if (response.data.status == 'success') {
+                    this.project = response.data.data.project;
+                }
+
+            })
+            .catch(error => console.error(error));
         }
 
         sendArtisan()

@@ -62,4 +62,15 @@ class ProjectsController extends Controller
             'data' => [],
         ];
     }
+
+    public function show(Project $project)
+    {
+        return[
+            'status' => 'success',
+            'message' => 'Get project data',
+            'data' => [
+                'project' => $project
+            ],
+        ];
+    }
 }
