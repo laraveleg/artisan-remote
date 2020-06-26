@@ -21,6 +21,7 @@ import Vue from 'vue';
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 Vue.component('projets-index-component', require('./components/Projets/ProjetsIndexComponent.vue').default);
+Vue.component('projets-show-component', require('./components/Projets/ProjetsShowComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

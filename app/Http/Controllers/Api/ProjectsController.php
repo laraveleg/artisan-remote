@@ -25,6 +25,7 @@ class ProjectsController extends Controller
             $_projects []= [
                 'guid' => $project->project->guid,
                 'name' => $project->project->name,
+                'url' => route('projects.show', [$project->project->guid])
             ];
         }
 

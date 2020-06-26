@@ -23,4 +23,10 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/index', 'Api\ProjectsController@index');
         Route::post('/store', 'Api\ProjectsController@store');
     });
+
+    Route::prefix('{project:guid}/artisans')->group(function () {
+        Route::post('/send', 'Api\ArtisansController@send');
+    });
 });
+
+Route::post('/callback/{ArtisanSent:guid}', 'Api\ArtisansController@callback')->name('artisan.callback');
