@@ -1,4 +1,7 @@
 language: php
 
+install:
+  - travis_retry composer install
+
 script:
   - vendor/bin/phpunit
