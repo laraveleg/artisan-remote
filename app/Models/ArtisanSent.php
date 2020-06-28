@@ -16,6 +16,6 @@ class ArtisanSent extends Model
         'guid',
         'artisan_sent',
         'artisan_output',
-        'status'
+        'status',
     ];
 }

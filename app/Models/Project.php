@@ -16,7 +16,7 @@ class Project extends Model
         'public_key',
         'secret_key',
         'name',
-        'url_listener'
+        'url_listener',
     ];
 
     protected $casts = [

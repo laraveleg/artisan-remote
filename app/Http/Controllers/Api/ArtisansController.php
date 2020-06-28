@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Project;
+use App\Models\ProjectTeam;
+use App\Models\ArtisanSent;
+
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
-
-use App\Http\Requests\ProjectStoreRequest;
-
-use App\Models\{
-    Project,
-    ProjectTeam,
-    ArtisanSent
-};
 
 class ArtisansController extends Controller
 {
@@ -24,7 +20,7 @@ class ArtisansController extends Controller
         $artisan = ArtisanSent::create([
             'projet_id' => $project->id,
             'guid' => Str::random(11),
-            'artisan_sent' => $request->artisan
+            'artisan_sent' => $request->artisan,
         ]);
 
         $hash_authorization = hash_hmac('sha256', $project->public_key, $project->secret_key);
@@ -48,7 +44,7 @@ class ArtisansController extends Controller
             'status' => 'success',
             'message' => 'The artisan has been sent to your project',
             'data' => [
-                'project_reception_status' => $response->successful() // project reception status to artisan
+                'project_reception_status' => $response->successful(), // project reception status to artisan
             ],
         ];
     }
