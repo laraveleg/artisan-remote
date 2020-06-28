@@ -29,17 +29,27 @@ class ArtisansController extends Controller
 
         $hash_authorization = hash_hmac('sha256', $project->public_key, $project->secret_key);
 
-        $response = Http::withHeaders([
-            'Authorization' => $hash_authorization,
-        ])->post($project->url_listener, [
-            'artisan' => $request->artisan,
-            'callback_url' => route('artisan.callback', [$artisan->guid])
-        ]);
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => $hash_authorization,
+            ])->post($project->url_listener, [
+                'artisan' => $request->artisan,
+                'callback_url' => route('artisan.callback', [$artisan->guid])
+            ]);
+        } catch (\Throwable $th) {
+            return[
+                'status' => 'warning',
+                'message' => 'Error callback URL',
+                'data' => [],
+            ];
+        }
 
         return[
             'status' => 'success',
-            'message' => 'Projects index',
-            'data' => $response->successful(),
+            'message' => 'The artisan has been sent to your project',
+            'data' => [
+                'project_reception_status' => $response->successful() // project reception status to artisan
+            ],
         ];
     }
 
