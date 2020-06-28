@@ -39,9 +39,11 @@ class ArtisansController extends Controller
             ];
         }
 
+        $check_received = ($response->successful()) ? ' - The artisan was received on the server' : ' - The artisan was not received on the server';
+
         return[
-            'status' => 'success',
-            'message' => 'The artisan has been sent to your project',
+            'status' => ($response->successful()) ? 'success' : 'warning',
+            'message' => 'The artisan has been sent to your project'.$check_received,
             'data' => [
                 'project_reception_status' => $response->successful(), // project reception status to artisan
             ],
