@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel EG
+                    Laravel EG - Artisan Remote
                 </div>
 
                 <div class="links">
