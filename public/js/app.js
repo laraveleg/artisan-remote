@@ -38108,7 +38108,7 @@ var render = function() {
                 "a",
                 {
                   staticClass: "btn btn-white btn-icon",
-                  attrs: { href: "#", "aria-label": "Button" },
+                  attrs: { href: "javasript:false", "aria-label": "Button" },
                   on: { click: _vm.sendArtisan }
                 },
                 [
