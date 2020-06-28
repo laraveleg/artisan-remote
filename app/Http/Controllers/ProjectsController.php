@@ -3,18 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-
-use App\Http\Requests\ProjectStoreRequest;
-
-use App\Models\{
-    Project,
-    ProjectTeam
-};
+use App\Models\Project;
 
 class ProjectsController extends Controller
 {
-    public function show(Project $project)
+    public function show(Request $request, Project $project)
     {
         return view('projects.show')->withProject($project);
     }

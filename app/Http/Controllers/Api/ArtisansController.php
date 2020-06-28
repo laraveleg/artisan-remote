@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\ProjectTeam;
 use App\Models\ArtisanSent;
-
-use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -30,7 +29,7 @@ class ArtisansController extends Controller
                 'Authorization' => $hash_authorization,
             ])->post($project->url_listener, [
                 'artisan' => $request->artisan,
-                'callback_url' => route('artisan.callback', [$artisan->guid])
+                'callback_url' => route('artisan.callback', [$artisan->guid]),
             ]);
         } catch (\Throwable $th) {
             return[

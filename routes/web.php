@@ -22,4 +22,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/projects/{project:guid}', 'ProjectsController@show')->name('projects.show');
-// Route::get('/projects/{project:guid}/artisan_orders', 'ProjectsController@show')->name('projects.show.artisan_orders');
+Route::get('/projects/{project:guid}/artisan_orders', 'ProjectsController@show')->name('projects.show.artisan_orders');
