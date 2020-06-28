@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectStoreRequest;
 use App\Models\Project;
 use App\Models\ProjectTeam;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
