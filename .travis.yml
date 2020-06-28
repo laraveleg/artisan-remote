@@ -22,4 +22,4 @@ before_script:
   - php artisan migrate
 
 script:
-  - vendor/bin/phpunit
+  - php artisan test
